@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Димитар Житарямба](https://up.htmlacademy.ru/javascript/25/user/1328779).
-* Наставник: Владимир Якушкин (https://htmlacademy.ru/profile/id126208).
+* Наставник: Владимир Якушкин (https://htmlacademy.ru/profile/id126208)
 
 ---
 
