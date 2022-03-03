@@ -45,4 +45,5 @@ const createPhoto = (newId) => {
 
 const PHOTOS = [...Array(25)].map( (elem,index) => createPhoto(++index));
 
-//console.log(PHOTOS);
+validStrLen('12345',5);
+console.log(PHOTOS);
