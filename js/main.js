@@ -36,7 +36,7 @@ const getRandomArrayElement = (elements) => {
 const createPhoto = (newId) => {
   return {
     id: newId,
-    url: 'photos/'+newId.toString()+'.jpg',
+    url: ''+'photos/'+newId+'.jpg'+'',
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInt(15,200),
     comments: [...Array(getRandomInt(1,5))].map(() => (getRandomArrayElement(COMMENTS)))
