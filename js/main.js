@@ -36,14 +36,14 @@ const getRandomArrayElement = (elements) => {
 const createPhoto = (newId) => {
   return {
     id: newId,
-    url: 'photos/'+newId+'.jpg',
+    url: 'photos/'+newId.toString()+'.jpg',
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInt(15,200),
-    comments: [...Array(getRandomInt(1,5))].map(() => getRandomArrayElement(COMMENTS))
+    comments: [...Array(getRandomInt(1,5))].map(() => (getRandomArrayElement(COMMENTS)))
   };
 };
 
-const PHOTOS = [...Array(25)].map( (elem,index) => createPhoto(++index));
+const PHOTOS = [...Array(25)].map( (elem,index) => (createPhoto(++index)));
 
-validStrLen('12345',5);
-console.log(PHOTOS);
+validStrLen('12345',PHOTOS.length);
+//console.log(PHOTOS);
