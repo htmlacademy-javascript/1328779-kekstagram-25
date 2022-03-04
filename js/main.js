@@ -34,7 +34,7 @@ const getRandomArrayElement = (elements) => (elements[getRandomInt(0, elements.l
 const createPhoto = (newId) => (
   {
     id: newId,
-    url: 'photos/' + newId + '.jpg',
+    url: `photos/${newId}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInt(15,200),
     comments: [...Array(getRandomInt(1,5))].map( () => ( getRandomArrayElement(COMMENTS) ) )
@@ -43,4 +43,3 @@ const createPhoto = (newId) => (
 const PHOTOS = [...Array(25)].map( (elem,index) => (createPhoto(++index) ) );
 
 validStrLen('12345',PHOTOS.length);
-//console.log(PHOTOS);
