@@ -21,15 +21,18 @@ const DESCRIPTIONS = [
   'Просто портрет.'
 ];
 
+const LIKE_COUNT = [15, 200];
+const COMMENT_COUNT = [1, 5];
 const createPhoto = (newId) => (
   {
     id: newId,
     url: `photos/${newId}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInt(15,200),
-    comments: [...Array(getRandomInt(1,5))].map( () => ( getRandomArrayElement(COMMENTS) ) )
+    likes: getRandomInt(...LIKE_COUNT),
+    comments: [...Array(getRandomInt(...COMMENT_COUNT))].map( () => ( getRandomArrayElement(COMMENTS) ) )
   });
 
 const createPhotos = (arrayLength) => ([...Array(arrayLength)].map( (elem,index) => (createPhoto(++index) ) ));
 
 export {createPhoto, createPhotos};
+

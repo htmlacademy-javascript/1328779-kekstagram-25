@@ -1,5 +1,4 @@
 import {createPhotos} from './data.js';
+import {drawPhotos} from './draw.js';
 
-createPhotos(25);
-
-
+console.log(drawPhotos(createPhotos(25)));
