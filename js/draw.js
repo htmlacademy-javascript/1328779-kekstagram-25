@@ -1,15 +1,18 @@
 
-const drawPhotos = (Photos) => {
+const drawPhotos = (photos, previewPhoto) => {
   const Section = document.querySelector('.pictures');
   const Template = document.querySelector('#picture').content.querySelector('.picture');
 
   const fragment = document.createDocumentFragment();
 
-  Photos.forEach( (Photo) => {
+  photos.forEach( (photo) => {
     const element = Template.cloneNode(true);
-    element.querySelector('.picture__img').src = Photo.url;
-    element.querySelector('.picture__likes').textContent = Photo.likes;
-    element.querySelector('.picture__comments').textContent = Photo.comments.length;
+    element.querySelector('.picture__img').src = photo.url;
+    element.querySelector('.picture__likes').textContent = photo.likes;
+    element.querySelector('.picture__comments').textContent = photo.comments.length;
+    element.addEventListener('click', () => {
+      previewPhoto(photo);
+    });
     fragment.appendChild(element);
   });
 
