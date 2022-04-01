@@ -28,7 +28,21 @@ const fillModal = (photo) => {
   commentsList.appendChild(Fragment);
 };
 
-const openModal = (photo) => {
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
+function closeModal () {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+}
+
+
+function openModal (photo) {
   if( photo ) {
     fillModal(photo);
   }
@@ -38,19 +52,7 @@ const openModal = (photo) => {
   commentsLoader.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscKeydown);
   btnCancel.addEventListener('click', closeModal);
-};
+}
 
-const closeModal = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onPopupEscKeydown);
-};
-
-const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeModal();
-  }
-};
 
 export {openModal, closeModal, fillModal};
