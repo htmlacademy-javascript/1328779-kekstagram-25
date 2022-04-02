@@ -1,5 +1,26 @@
 import {getRandomInt, getRandomArrayElement} from './util.js';
 
+let idPhoto = 0;
+let idComment = 0;
+
+const getIdPhoto = () => ++idPhoto;
+const getIdComment = () => ++idComment;
+
+const NAMES = [
+  'Арсен',
+  'Ринат',
+  'Аврора',
+  'Аделаида',
+  'Коловарот',
+  'Алан',
+  'Кеша',
+  'Драздаперма',
+  'Рикардо',
+  'Анатолий',
+  'Кенни',
+  'Васька'
+];
+
 const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -23,14 +44,26 @@ const DESCRIPTIONS = [
 
 const LIKE_COUNT = [15, 200];
 const COMMENT_COUNT = [1, 5];
-const createPhoto = (newId) => (
+const AVATAR_COUNT = [1, 6];
+
+const createComment = () => (
   {
+    id: getIdComment(),
+    avatar: `img/avatar-${getRandomInt(...AVATAR_COUNT)}.svg`,
+    message: getRandomArrayElement(COMMENTS),
+    name: getRandomArrayElement(NAMES)
+  });
+
+const createPhoto = () => {
+  const newId = getIdPhoto();
+  return {
     id: newId,
     url: `photos/${newId}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInt(...LIKE_COUNT),
-    comments: [...Array(getRandomInt(...COMMENT_COUNT))].map( () => ( getRandomArrayElement(COMMENTS) ) )
-  });
+    comments: [...Array(getRandomInt(...COMMENT_COUNT))].map( () => ( createComment() ) )
+  };
+};
 
 const createPhotos = (arrayLength) => ([...Array(arrayLength)].map( (elem,index) => (createPhoto(++index) ) ));
 
