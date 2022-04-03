@@ -697,6 +697,15 @@ main {
   border-radius: 5px;
 }
 
+/**
+ * Для отображения ошибок
+ */
+
+.img-upload__error {
+  display: block;
+  font-size: 0.85em;
+  color: #c00;
+}
 
 /**
  * Кнопка для отправки изображения
