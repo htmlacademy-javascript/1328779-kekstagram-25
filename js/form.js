@@ -65,7 +65,7 @@ pristine.addValidator(
 pristine.addValidator(
   inputDescription,
   (value) => !(value.length > 140),
-  'Максимальная длина комментария 140 символов!'
+  'Максимальная длина 140 символов!'
 );
 
 const changeScale = () =>  {
