@@ -1,5 +1,5 @@
 import {openModal} from './modal.js';
-import {isEscapeKey} from "./util";
+import {isEscapeKey} from "./util.js";
 
 
 const inputFile = document.querySelector('#upload-file');
