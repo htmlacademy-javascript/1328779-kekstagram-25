@@ -80,7 +80,7 @@ const changeEffect = (effect) =>  {
 };
 
 btnScaleMinus.addEventListener('click', () =>  {
-  if(valueScale.value >= 25) {
+  if(valueScale.value >= 50) {
     valueScale.value = +valueScale.value-25;
     changeScale();
   }
