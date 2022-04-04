@@ -42,46 +42,29 @@ inputHashtags.addEventListener('keydown',onEscKeydownForm);
 inputDescription.addEventListener('keydown',onEscKeydownForm);
 
 const reHash = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-
-
-function validateHash (value) {
-  return !value.split(' ').find((e) => (!reHash.test(e)));
-}
+const getHashArray = (str) => (str.split(' ').filter((e) => e.length>0).map((e) => e.toUpperCase()));
 
 pristine.addValidator(
   inputHashtags,
-  validateHash,
+  (value) => !getHashArray(value).find((e) => (!reHash.test(e))),
   'Неверный хэштег!'
 );
 
-function validateHashLength (value) {
-  return value.split(' ').filter((e) => e.length>0).length <= 5;
-}
-
 pristine.addValidator(
   inputHashtags,
-  validateHashLength,
+  (value) => (getHashArray(value).length <= 5),
   'Допустимо не больше пяти хэштегов!'
 );
 
-function validateHashRepeat (value) {
-  const arr = value.split(' ').map((e) => e.toUpperCase());
-  return !(arr.length > Array.from(new Set(arr)).length);
-}
-
 pristine.addValidator(
   inputHashtags,
-  validateHashRepeat,
+  (value) => !(getHashArray(value).length > Array.from(new Set(getHashArray(value))).length),
   'Недопустимо повторение хэштегов!'
 );
 
-function validateDescription (value) {
-  return !(value.length > 140);
-}
-
 pristine.addValidator(
   inputDescription,
-  validateDescription,
+  (value) => !(value.length > 140),
   'Максимальная длина комментария 140 символов!'
 );
 
