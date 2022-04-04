@@ -1,4 +1,5 @@
-import {openModal, setEscKey} from './modal.js';
+import {openModal} from './modal.js';
+import {isEscapeKey} from "./util";
 
 
 const inputFile = document.querySelector('#upload-file');
@@ -31,13 +32,17 @@ const EFFECTS = {
 };
 inputFile.addEventListener('change', createForm );
 
+
+const onEscKeydownForm = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+inputHashtags.addEventListener('keydown',onEscKeydownForm);
+inputDescription.addEventListener('keydown',onEscKeydownForm);
+
 const reHash = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const inputFocusIn = () => (setEscKey(false));
-const inputFocusOut = () => (setEscKey(true));
-inputHashtags.addEventListener('focus',inputFocusIn);
-inputHashtags.addEventListener('blur',inputFocusOut);
-inputDescription.addEventListener('focus',inputFocusIn);
-inputDescription.addEventListener('blur',inputFocusOut);
+
 
 function validateHash (value) {
   return !value.split(' ').find((e) => (!reHash.test(e)));

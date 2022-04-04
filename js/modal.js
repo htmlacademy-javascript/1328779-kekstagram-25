@@ -3,12 +3,11 @@ import {isEscapeKey} from './util.js';
 let sectionModal;
 let btnCancel;
 let closeModalAdd;
-let ableEscKey = true;
 
 const body = document.querySelector('body');
 
 const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt) && ableEscKey) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
@@ -35,8 +34,5 @@ function closeModal () {
   btnCancel.removeEventListener('click', closeModal);
 }
 
-const setEscKey = (isAble) => {
-  ableEscKey = (isAble === null ? true : isAble);
-};
 
-export {openModal, closeModal, setEscKey};
+export {openModal, closeModal};
