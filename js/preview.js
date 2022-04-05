@@ -1,12 +1,12 @@
 import {openModal} from './modal.js';
 
+const COMMENTS_DISPLAY = 5;
+
 let arrComments;
 let offsetComments;
 
-const COMMENTS_DISPLAY = 5;
 const bigPicture = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
-const commentsCount = document.querySelector('.comments-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
 const fillComments = (offset) => {
@@ -14,15 +14,17 @@ const fillComments = (offset) => {
     offsetComments += offset;
   }
   else {
+    offsetComments = arrComments.length;
     commentsLoader.classList.add('hidden');
   }
 
-  //commentsCount.textContent = arrComments.length-offsetComments;
+  const commentsCount = document.querySelector('.social__comment-count');
+  commentsCount.innerHTML = `${offsetComments} из <span class="comments-count">${arrComments.length}</span> комментариев`;
 
   const commentTemplate = commentsList.children[0];
   const Fragment = document.createDocumentFragment();
 
-  arrComments.filter((comment, index) => (index<=(offsetComments+COMMENTS_DISPLAY-1))).forEach( (comment) => {
+  arrComments.filter((comment, index) => (index<=(offsetComments-1))).forEach( (comment) => {
     const newComment = commentTemplate.cloneNode(true);
     newComment.querySelector('.social__picture').src = comment.avatar;
     newComment.querySelector('.social__picture').alt = comment.name;
@@ -32,6 +34,7 @@ const fillComments = (offset) => {
 
   commentsList.innerHTML = '';
   commentsList.appendChild(Fragment);
+
 };
 
 const fillPreview = (photo) => {
@@ -42,16 +45,14 @@ const fillPreview = (photo) => {
   commentsLoader.classList.remove('hidden');
 
   arrComments = photo.comments;
-  commentsCount.textContent = arrComments.length;
   offsetComments = 0;
-
-  fillComments(0);
+  fillComments(COMMENTS_DISPLAY);
 
   openModal(bigPicture, '.big-picture__cancel');
 };
 
 commentsLoader.addEventListener('click', () =>  {
-  fillComments(5);
+  fillComments(COMMENTS_DISPLAY);
 });
 
 export {fillPreview};
