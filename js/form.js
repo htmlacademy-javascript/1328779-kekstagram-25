@@ -1,6 +1,17 @@
 import {openModal} from './modal.js';
 import {isEscapeKey} from './util.js';
 
+const SCALE_VALUE = {min:25, max:100};
+const HASHTAG_COUNT = 5;
+const DESCRIPTION_LENGTH = 140;
+const EFFECTS = {
+  none:{name:'none',add:0,rate:0,unit:''},
+  chrome:{name:'grayscale',add:0,rate:1,unit:''},
+  sepia:{name:'sepia',add:0,rate:1,unit:''},
+  marvin:{name:'invert',add:0,rate:100,unit:'%'},
+  phobos:{name:'blur',add:0,rate:3,unit:'px'},
+  heat:{name:'brightness',add:1,rate:2,unit:''}
+};
 
 const inputFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__overlay');
@@ -22,14 +33,6 @@ const pristine = new Pristine(inputForm,{
 });
 const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
-
-const EFFECTS = {
-  chrome:{name:'grayscale',add:0,rate:1,unit:''},
-  sepia:{name:'sepia',add:0,rate:1,unit:''},
-  marvin:{name:'invert',add:0,rate:100,unit:'%'},
-  phobos:{name:'blur',add:0,rate:3,unit:'px'},
-  heat:{name:'brightness',add:1,rate:2,unit:''}
-};
 inputFile.addEventListener('change', createForm );
 
 
@@ -41,19 +44,23 @@ const onEscKeydownForm = (evt) => {
 inputHashtags.addEventListener('keydown',onEscKeydownForm);
 inputDescription.addEventListener('keydown',onEscKeydownForm);
 
-const reHash = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const getHashArray = (str) => (str.split(' ').filter((e) => e.length>0).map((e) => e.toUpperCase()));
+const regexHash = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const getHashArray = (str) => (
+  str.split(' ')
+    .filter((e) => e.length)
+    .map((e) => e.toUpperCase())
+);
 
 pristine.addValidator(
   inputHashtags,
-  (value) => !getHashArray(value).find((e) => (!reHash.test(e))),
+  (value) => !getHashArray(value).find((e) => !regexHash.test(e)),
   'Неверный хэштег!'
 );
 
 pristine.addValidator(
   inputHashtags,
-  (value) => (getHashArray(value).length <= 5),
-  'Допустимо не больше пяти хэштегов!'
+  (value) => (getHashArray(value).length <= HASHTAG_COUNT),
+  `Допустимо не больше ${HASHTAG_COUNT} хэштегов!`
 );
 
 pristine.addValidator(
@@ -64,8 +71,8 @@ pristine.addValidator(
 
 pristine.addValidator(
   inputDescription,
-  (value) => !(value.length > 140),
-  'Максимальная длина 140 символов!'
+  (value) => !(value.length > DESCRIPTION_LENGTH),
+  `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
 const changeScale = () =>  {
@@ -73,21 +80,22 @@ const changeScale = () =>  {
 };
 
 const changeEffect = (effect) =>  {
+  const { name, add, rate, unit } = EFFECTS[effect];
   if(effect !== 'none') {
-    effect = `${EFFECTS[effect].name}(${EFFECTS[effect].add+valueEffect.value * EFFECTS[effect].rate / 100}${EFFECTS[effect].unit})`;
+    effect = `${name}(${add+valueEffect.value * rate / 100}${unit})`;
   }
   previewPhoto.style.filter = effect;
 };
 
 btnScaleMinus.addEventListener('click', () =>  {
-  if(valueScale.value >= 50) {
+  if(valueScale.value > SCALE_VALUE.min) {
     valueScale.value = +valueScale.value-25;
     changeScale();
   }
 });
 
 btnScalePlus.addEventListener('click', () =>  {
-  if(valueScale.value <= 75) {
+  if(valueScale.value < SCALE_VALUE.max) {
     valueScale.value = +valueScale.value+25;
     changeScale();
   }
