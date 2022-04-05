@@ -13,13 +13,16 @@ const fillComments = (offset) => {
   if(offsetComments+offset < arrComments.length) {
     offsetComments += offset;
   }
+  else {
+    commentsLoader.classList.add('hidden');
+  }
 
-  commentsCount.textContent = arrComments.length-offsetComments;
+  //commentsCount.textContent = arrComments.length-offsetComments;
 
   const commentTemplate = commentsList.children[0];
   const Fragment = document.createDocumentFragment();
 
-  arrComments.filter((comment, index) => (index>=offsetComments && index<=(offsetComments+COMMENTS_DISPLAY-1))).forEach( (comment) => {
+  arrComments.filter((comment, index) => (index<=(offsetComments+COMMENTS_DISPLAY-1))).forEach( (comment) => {
     const newComment = commentTemplate.cloneNode(true);
     newComment.querySelector('.social__picture').src = comment.avatar;
     newComment.querySelector('.social__picture').alt = comment.name;
@@ -35,9 +38,11 @@ const fillPreview = (photo) => {
   document.querySelector('.big-picture__img').children[0].src = photo.url;
   document.querySelector('.social__caption').textContent = photo.description;
   document.querySelector('.likes-count').textContent = photo.likes;
-  document.querySelector('.comments-count').textContent = photo.comments.length;
+
+  commentsLoader.classList.remove('hidden');
 
   arrComments = photo.comments;
+  commentsCount.textContent = arrComments.length;
   offsetComments = 0;
 
   fillComments(0);
