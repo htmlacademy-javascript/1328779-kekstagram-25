@@ -1,6 +1,7 @@
 import {createPhotos} from './data.js';
 import {drawPhotos} from './draw.js';
-import {openModal} from './modal.js';
+import {fillPreview} from './preview.js';
+import './form.js';
 
 
-drawPhotos(createPhotos(25), openModal);
+drawPhotos(createPhotos(25), fillPreview);

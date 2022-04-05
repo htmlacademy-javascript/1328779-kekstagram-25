@@ -43,7 +43,7 @@ const DESCRIPTIONS = [
 ];
 
 const LIKE_COUNT = [15, 200];
-const COMMENT_COUNT = [1, 5];
+const COMMENT_COUNT = [6, 19];
 const AVATAR_COUNT = [1, 6];
 
 const createComment = () => (
