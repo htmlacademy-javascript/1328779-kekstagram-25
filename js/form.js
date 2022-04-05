@@ -41,6 +41,7 @@ const onEscKeydownForm = (evt) => {
     evt.stopPropagation();
   }
 };
+
 inputHashtags.addEventListener('keydown',onEscKeydownForm);
 inputDescription.addEventListener('keydown',onEscKeydownForm);
 
