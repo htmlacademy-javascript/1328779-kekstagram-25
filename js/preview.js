@@ -45,8 +45,8 @@ const fillPreview = (photo) => {
   commentsLoader.classList.remove('hidden');
 
   arrComments = photo.comments;
-  offsetComments = 0;
-  fillComments(COMMENTS_DISPLAY);
+  offsetComments = COMMENTS_DISPLAY;
+  fillComments(0);
 
   openModal(bigPicture, '.big-picture__cancel');
 };
