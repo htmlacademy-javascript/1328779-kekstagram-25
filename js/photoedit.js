@@ -18,15 +18,13 @@ const btnScalePlus = document.querySelector('.scale__control--bigger');
 const sliderElement = document.querySelector('.effect-level__slider');
 
 noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 10,
-  },
-  start: 10,
+  range: {min: 0, max: 1 },
+  start: 1,
   step: 1,
   connect: 'lower',
 });
 
+// МАСШТАБ
 const getScale = () => (Number(inputScale.value.substr(0, inputScale.value.length-1)));
 
 const changeScale = (scaleValue) =>  {
@@ -48,9 +46,11 @@ btnScalePlus.addEventListener('click', () =>  {
   }
 });
 
+// ЭФФЕКТ
+
 const getEffect = () => (Array.from(inputEffectList).find((e)=>e.checked).value);
 
-
+// применяем эффект
 const changeEffect = (effect) =>  {
   const { name, rate, unit } = EFFECTS[effect];
   const effectValue = Number(sliderElement.noUiSlider.get());
@@ -61,10 +61,10 @@ const changeEffect = (effect) =>  {
   if(effect !== 'none') {
     filter = `${name}(${effectValue * rate}${unit})`;
   }
-  console.log(filter);
   previewPhoto.style.filter = filter;
 };
 
+// инициализация слайдера
 const initEffect = (effect) => {
   const { min, max } = EFFECTS[effect];
   // установки слайдера
@@ -97,11 +97,14 @@ inputEffectList.forEach((element) => {
   });
 });
 
+// инициализация изображения
 const initPhotoEditor = (file) => {
   previewPhoto.src = window.URL.createObjectURL(file);
   inputEffectList[0].checked = true;
-  initEffect(getEffect());
+  const effect = getEffect();
+  initEffect(effect);
+  changeEffect(effect);
   changeScale(100);
 };
 
-export {initPhotoEditor, changeEffect, changeScale};
+export {initPhotoEditor, initEffect, changeEffect, changeScale};

@@ -56,6 +56,7 @@ pristine.addValidator(
   `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
+// значения по умолчанию текстовых полей
 const initValidate = () => {
   inputHashtags.value = '';
   inputDescription.value = '';
