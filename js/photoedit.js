@@ -79,9 +79,9 @@ const initEffect = (effect) => {
   // значение инпута формы
   inputLevel.value = max;
   if(effect === 'none') {
-    sliderElement.setAttribute('disabled', true);
+    sliderElement.classList.add('hidden');
   } else {
-    sliderElement.removeAttribute('disabled');
+    sliderElement.classList.remove('hidden');
   }
 };
 
