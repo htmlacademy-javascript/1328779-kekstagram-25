@@ -686,7 +686,6 @@ main {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -701,6 +700,7 @@ main {
   height: 100px;
 
   margin: 0 auto;
+  margin-top: 20px;
   padding: 15px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -710,6 +710,24 @@ main {
   border-radius: 5px;
 }
 
+/**
+ * Для отображения ошибок
+ */
+.img-upload__item {
+  position: relative;
+}
+
+.img-upload__error {
+
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,100%);
+  bottom: 0;
+
+  display: inline-block;
+  font-size: 0.85em;
+  color: #c00;
+}
 
 /**
  * Кнопка для отправки изображения
