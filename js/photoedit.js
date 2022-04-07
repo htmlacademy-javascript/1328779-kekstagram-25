@@ -17,13 +17,6 @@ const btnScaleMinus = document.querySelector('.scale__control--smaller');
 const btnScalePlus = document.querySelector('.scale__control--bigger');
 const sliderElement = document.querySelector('.effect-level__slider');
 
-noUiSlider.create(sliderElement, {
-  range: {min: 0, max: 1 },
-  start: 1,
-  step: 1,
-  connect: 'lower',
-});
-
 // МАСШТАБ
 const getScale = () => (Number(inputScale.value.substr(0, inputScale.value.length-1)));
 
@@ -64,6 +57,19 @@ const changeEffect = (effect) =>  {
   previewPhoto.style.filter = filter;
 };
 
+// создание слайдера
+const createSlider = () => {
+  noUiSlider.create(sliderElement, {
+    range: {min: 0, max: 1 },
+    start: 1,
+    step: 1,
+    connect: 'lower',
+  });
+  sliderElement.noUiSlider.on('update', () => {
+    changeEffect(getEffect());
+  });
+};
+
 // инициализация слайдера
 const initEffect = (effect) => {
   const { min, max } = EFFECTS[effect];
@@ -85,26 +91,33 @@ const initEffect = (effect) => {
   }
 };
 
-sliderElement.noUiSlider.on('update', () => {
-  changeEffect(getEffect());
-});
 
-inputEffectList.forEach((element) => {
-  element.addEventListener('change',(evt) => {
-    const effect = evt.target.value;
-    initEffect(effect);
-    changeEffect(effect);
-  });
-});
+const onchangeBtnRadio = (evt) => {
+  const effect = evt.target.value;
+  initEffect(effect);
+  changeEffect(effect);
+};
+
 
 // инициализация изображения
 const initPhotoEditor = (file) => {
   previewPhoto.src = window.URL.createObjectURL(file);
+  createSlider();
   inputEffectList[0].checked = true;
   const effect = getEffect();
   initEffect(effect);
   changeEffect(effect);
   changeScale(100);
+  inputEffectList.forEach((element) => {
+    element.addEventListener('change',onchangeBtnRadio);
+  });
 };
 
-export {initPhotoEditor, initEffect, changeEffect, changeScale};
+const dropPhotoEditor = () => {
+  inputEffectList.forEach((element) => {
+    element.removeEventListener('change',onchangeBtnRadio);
+  });
+  sliderElement.noUiSlider.destroy();
+};
+
+export {initPhotoEditor, dropPhotoEditor, initEffect, changeEffect, changeScale};

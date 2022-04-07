@@ -1,5 +1,5 @@
 import {openModal} from './modal.js';
-import {initPhotoEditor} from './photoedit.js';
+import {initPhotoEditor, dropPhotoEditor} from './photoedit.js';
 import {initValidate} from './validate.js';
 
 const inputFile = document.querySelector('#upload-file');
@@ -11,6 +11,7 @@ function createForm () {
   initValidate(); // значения по умолчанию текстовых полей
 
   openModal(uploadForm, '.img-upload__cancel', () => {
+    dropPhotoEditor();
     inputFile.value = '';
   });
 }
