@@ -8,6 +8,18 @@ const inputForm = document.querySelector('.img-upload__form');
 const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
 
+const onEscKeydownForm = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+const getHashArray = (str) => (
+  str.split(' ')
+    .filter((e) => e.length)
+    .map((e) => e.toUpperCase())
+);
+
 const pristine = new Pristine(inputForm,{
   classTo: 'img-upload__item',
   errorClass: 'img-upload__item--invalid',
@@ -16,19 +28,6 @@ const pristine = new Pristine(inputForm,{
   errorTextTag: 'span',
   errorTextClass: 'img-upload__error'
 });
-
-const onEscKeydownForm = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-  }
-};
-
-
-const getHashArray = (str) => (
-  str.split(' ')
-    .filter((e) => e.length)
-    .map((e) => e.toUpperCase())
-);
 
 pristine.addValidator(
   inputHashtags,
@@ -73,7 +72,7 @@ const dropValidate = () => {
   inputHashtags.removeEventListener('keydown',onEscKeydownForm);
   inputDescription.removeEventListener('keydown',onEscKeydownForm);
   inputForm.removeEventListener('submit', onsubmitForm);
-  pristine.reset();
+  pristine.reset(); // вызывать destroy() смысла нет - eventы остаются
   inputForm.reset();
 };
 
