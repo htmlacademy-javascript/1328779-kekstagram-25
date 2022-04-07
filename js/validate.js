@@ -23,8 +23,6 @@ const onEscKeydownForm = (evt) => {
   }
 };
 
-inputHashtags.addEventListener('keydown',onEscKeydownForm);
-inputDescription.addEventListener('keydown',onEscKeydownForm);
 
 const getHashArray = (str) => (
   str.split(' ')
@@ -56,18 +54,27 @@ pristine.addValidator(
   `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
-// значения по умолчанию текстовых полей
-const initValidate = () => {
-  inputHashtags.value = '';
-  inputDescription.value = '';
-  pristine.validate();
-};
-
-inputForm.addEventListener('submit', (evt) => {
+const onsubmitForm = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     inputForm.submit();
   }
-});
+};
 
-export {initValidate};
+// значения по умолчанию текстовых полей
+const initValidate = () => {
+  inputForm.addEventListener('submit', onsubmitForm);
+  inputHashtags.addEventListener('keydown',onEscKeydownForm);
+  inputDescription.addEventListener('keydown',onEscKeydownForm);
+};
+
+const dropValidate = () => {
+  //pristine.reset();
+  inputHashtags.removeEventListener('keydown',onEscKeydownForm);
+  inputDescription.removeEventListener('keydown',onEscKeydownForm);
+  inputForm.removeEventListener('submit', onsubmitForm);
+  pristine.reset();
+  inputForm.reset();
+};
+
+export {initValidate, dropValidate};

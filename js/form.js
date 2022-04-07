@@ -1,6 +1,6 @@
 import {openModal} from './modal.js';
 import {initPhotoEditor, dropPhotoEditor} from './photoedit.js';
-import {initValidate} from './validate.js';
+import {initValidate, dropValidate} from './validate.js';
 
 const inputFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__overlay');
@@ -12,6 +12,7 @@ function createForm () {
 
   openModal(uploadForm, '.img-upload__cancel', () => {
     dropPhotoEditor();
+    dropValidate();
     inputFile.value = '';
   });
 }
