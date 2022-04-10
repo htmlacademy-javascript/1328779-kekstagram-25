@@ -11,15 +11,11 @@ import './form.js';
 // модальные окна
 import {createModalMessages} from './modal.js';
 
-
-
-
 const loadPhotos = createLoader(
   (photos) => drawPhotos(photos, fillPreview),
   () => {
-
     createModalMessages('loading');
-    // генерация случайных данных
+    // генерация случайных данных, если загрузка сломалась
     //drawPhotos(createPhotos(25), fillPreview);
   }
 );
