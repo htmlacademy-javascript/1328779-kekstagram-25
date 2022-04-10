@@ -1224,7 +1224,8 @@ main {
  */
 
 .error,
-.success {
+.success,
+.error-loading {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -1240,7 +1241,8 @@ main {
 }
 
 .error__inner,
-.success__inner {
+.success__inner,
+.error-loading__inner {
   position: relative;
   width: 600px;
   padding: 50px 20px;

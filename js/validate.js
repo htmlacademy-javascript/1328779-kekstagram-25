@@ -29,22 +29,24 @@ const pristine = new Pristine(inputForm,{
   errorTextClass: 'img-upload__error'
 });
 
-pristine.addValidator(
-  inputHashtags,
-  (value) => !getHashArray(value).find((e) => !regexHash.test(e)),
-  'Неверный хэштег!'
-);
+const validateHash = (value) => {
+  const arrayMessage = [];
+  if(getHashArray(value).find((e) => !regexHash.test(e))) {
+    arrayMessage.push('Неверный хэштег! ');
+  }
+  if (getHashArray(value).length > HASHTAG_COUNT) {
+    arrayMessage.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
+  }
+  if (getHashArray(value).length > Array.from(new Set(getHashArray(value))).length) {
+    arrayMessage.push('Недопустимо повторение хэштегов!');
+  }
+  return arrayMessage;
+};
 
 pristine.addValidator(
   inputHashtags,
-  (value) => (getHashArray(value).length <= HASHTAG_COUNT),
-  `Допустимо не больше ${HASHTAG_COUNT} хэштегов!`
-);
-
-pristine.addValidator(
-  inputHashtags,
-  (value) => !(getHashArray(value).length > Array.from(new Set(getHashArray(value))).length),
-  'Недопустимо повторение хэштегов!'
+  (value) => (validateHash(value).length===0),
+  (value) => (validateHash(value).join(' '))
 );
 
 pristine.addValidator(
@@ -53,27 +55,18 @@ pristine.addValidator(
   `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
-const onsubmitForm = (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    inputForm.submit();
-  }
-};
 
-// значения по умолчанию текстовых полей
+const getValidate = () => (pristine.validate());
+
 const initValidate = () => {
-  inputForm.addEventListener('submit', onsubmitForm);
   inputHashtags.addEventListener('keydown',onEscKeydownForm);
   inputDescription.addEventListener('keydown',onEscKeydownForm);
 };
 
 const dropValidate = () => {
-  //pristine.reset();
   inputHashtags.removeEventListener('keydown',onEscKeydownForm);
   inputDescription.removeEventListener('keydown',onEscKeydownForm);
-  inputForm.removeEventListener('submit', onsubmitForm);
-  pristine.reset(); // вызывать destroy() смысла нет - eventы остаются
-  inputForm.reset();
+  pristine.reset(); // вызывать destroy() смысла нет - event-ы остаются
 };
 
-export {initValidate, dropValidate};
+export {initValidate, dropValidate, getValidate};
