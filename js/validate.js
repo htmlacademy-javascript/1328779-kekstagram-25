@@ -38,7 +38,7 @@ const validateHash = (value) => {
     arrayMessage.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
   }
   if (getHashArray(value).length > Array.from(new Set(getHashArray(value))).length) {
-    arrayMessage.push('Недопустимо повторение хэштегов!');
+    arrayMessage.push('Недопустимо повторение хэштегов! ');
   }
   return arrayMessage;
 };
