@@ -686,6 +686,7 @@ main {
   width: 450px;
 
   margin: 0 auto;
+  margin-bottom: 5px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -700,7 +701,7 @@ main {
   height: 100px;
 
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 15px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -725,8 +726,11 @@ main {
   bottom: 0;
 
   display: inline-block;
-  font-size: 0.85em;
-  color: #c00;
+  font-size: 0.75em;
+  color: #fff;
+  background-color: #c00;
+  padding: 0 5px;
+  border-radius: 5px;
 }
 
 /**

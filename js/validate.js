@@ -32,7 +32,7 @@ const pristine = new Pristine(inputForm,{
 const validateHash = (value) => {
   const arrayMessage = [];
   if(getHashArray(value).find((e) => !regexHash.test(e))) {
-    arrayMessage.push('Неверный хэштег! ');
+    arrayMessage.push(`Неверный хэштег! (${value}) `);
   }
   if (getHashArray(value).length > HASHTAG_COUNT) {
     arrayMessage.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
@@ -46,7 +46,7 @@ const validateHash = (value) => {
 pristine.addValidator(
   inputHashtags,
   (value) => (validateHash(value).length===0),
-  (value) => (validateHash(value).join(' '))
+  (value) => (validateHash(value)[0])
 );
 
 pristine.addValidator(
