@@ -8,6 +8,18 @@ const inputForm = document.querySelector('.img-upload__form');
 const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
 
+const onEscKeydownForm = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+const getHashArray = (str) => (
+  str.split(' ')
+    .filter((e) => e.length)
+    .map((e) => e.toUpperCase())
+);
+
 const pristine = new Pristine(inputForm,{
   classTo: 'img-upload__item',
   errorClass: 'img-upload__item--invalid',
@@ -17,37 +29,24 @@ const pristine = new Pristine(inputForm,{
   errorTextClass: 'img-upload__error'
 });
 
-const onEscKeydownForm = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
+const validateHash = (value) => {
+  const arrayMessage = [];
+  if(getHashArray(value).find((e) => !regexHash.test(e))) {
+    arrayMessage.push(`Неверный хэштег! (${value}) `);
   }
+  if (getHashArray(value).length > HASHTAG_COUNT) {
+    arrayMessage.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
+  }
+  if (getHashArray(value).length > Array.from(new Set(getHashArray(value))).length) {
+    arrayMessage.push('Недопустимо повторение хэштегов! ');
+  }
+  return arrayMessage;
 };
 
-inputHashtags.addEventListener('keydown',onEscKeydownForm);
-inputDescription.addEventListener('keydown',onEscKeydownForm);
-
-const getHashArray = (str) => (
-  str.split(' ')
-    .filter((e) => e.length)
-    .map((e) => e.toUpperCase())
-);
-
 pristine.addValidator(
   inputHashtags,
-  (value) => !getHashArray(value).find((e) => !regexHash.test(e)),
-  'Неверный хэштег!'
-);
-
-pristine.addValidator(
-  inputHashtags,
-  (value) => (getHashArray(value).length <= HASHTAG_COUNT),
-  `Допустимо не больше ${HASHTAG_COUNT} хэштегов!`
-);
-
-pristine.addValidator(
-  inputHashtags,
-  (value) => !(getHashArray(value).length > Array.from(new Set(getHashArray(value))).length),
-  'Недопустимо повторение хэштегов!'
+  (value) => (validateHash(value).length===0),
+  (value) => (validateHash(value)[0])
 );
 
 pristine.addValidator(
@@ -56,18 +55,18 @@ pristine.addValidator(
   `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
-// значения по умолчанию текстовых полей
+
+const getValidate = () => (pristine.validate());
+
 const initValidate = () => {
-  inputHashtags.value = '';
-  inputDescription.value = '';
-  pristine.validate();
+  inputHashtags.addEventListener('keydown',onEscKeydownForm);
+  inputDescription.addEventListener('keydown',onEscKeydownForm);
 };
 
-inputForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    inputForm.submit();
-  }
-});
+const dropValidate = () => {
+  inputHashtags.removeEventListener('keydown',onEscKeydownForm);
+  inputDescription.removeEventListener('keydown',onEscKeydownForm);
+  pristine.reset(); // вызывать destroy() смысла нет - event-ы остаются
+};
 
-export {initValidate};
+export {initValidate, dropValidate, getValidate};
