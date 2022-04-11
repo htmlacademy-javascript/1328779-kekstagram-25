@@ -1,4 +1,4 @@
-const URL_GET = 'https://25.javascript.pages.academy/kekstagram/datas';
+const URL_GET = 'https://25.javascript.pages.academy/kekstagram/data';
 const URL_SEND = 'https://25.javascript.pages.academy/kekstagram';
 
 const createLoader = (onSuccess, onError) => () =>
