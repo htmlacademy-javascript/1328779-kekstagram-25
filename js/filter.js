@@ -1,5 +1,4 @@
 import {debounce, getRandomPosNeg} from './util.js';
-import {getPhotos} from './loader.js';
 // отрисовка фото на основном экране
 import {drawPhotos} from './draw.js';
 
@@ -8,9 +7,8 @@ const DELAY_DRAW = 500;
 
 // отрисовка с учетом фильтра
 // вынесена в отдельную функция для устранения дребезга
-const drawFilteredPhotos = () => {
+const drawFilteredPhotos = (photos) => {
 
-  const photos = getPhotos();
   const filterId = document.querySelector('.img-filters__button--active').id;
 
   // случайные 10 фото
@@ -47,14 +45,14 @@ const setFilterClick = (button, drawFunction) => {
 };
 
 // активируем фильтр
-const createFilter = () => {
+const createFilter = (photos) => {
 
   const filterButtons = document.querySelectorAll('.img-filters__button');
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   filterButtons.forEach((button) => {
     setFilterClick(
       button,
-      debounce(() => drawFilteredPhotos(), DELAY_DRAW)
+      debounce(() => drawFilteredPhotos(photos), DELAY_DRAW)
     );
 
   });
