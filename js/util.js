@@ -1,7 +1,4 @@
-
-const getRandomPosNeg = () => {
-  return Math.random() - 0.5;
-};
+const getRandomPosNeg = () => (Math.random() - 0.5);
 
 const getRandomInt = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));

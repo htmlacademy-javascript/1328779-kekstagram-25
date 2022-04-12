@@ -14,9 +14,8 @@ inputFile.addEventListener('change', createForm );
 
 const validFileName = (file) => {
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => {
-    return fileName.endsWith(it);
-  });
+  const matches = FILE_TYPES
+    .some( (it) => fileName.endsWith(it) );
   return matches;
 };
 
