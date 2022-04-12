@@ -1,22 +1,37 @@
-// генерация случайных данных
-//import {createPhotos} from './data.js';
+import {debounce} from './util.js';
 // api с сервером
 import {createLoader} from './api.js';
 // отрисовка фото на основном экране
 import {drawPhotos} from './draw.js';
-// экран предпросмотра фото
-import {fillPreview} from './preview.js';
-// форма редактирования фото
-import './form.js';
+// работа с фильтром
+import {drawFilteredPhotos, setFilterClick} from './filter.js';
 // модальные окна
 import {createModalMessages} from './modal.js';
+// форма редактирования фото
+import './form.js';
+
+const DELAY_DRAW = 500;
+
 
 const loadPhotos = createLoader(
-  (photos) => drawPhotos(photos, fillPreview),
+  (photos) => {
+
+    // отрисовываем фото на основной странице
+    drawPhotos(photos);
+
+    // активируем фильтр
+    const filterButtons = document.querySelectorAll('.img-filters__button');
+    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+    filterButtons.forEach((button) => {
+      setFilterClick(
+        button,
+        debounce(() => drawFilteredPhotos(photos), DELAY_DRAW)
+      );
+    });
+
+  },
   () => {
     createModalMessages('loading');
-    // генерация случайных данных, если загрузка сломалась
-    //drawPhotos(createPhotos(25), fillPreview);
   }
 );
 loadPhotos();
