@@ -1,4 +1,3 @@
-
 // экран предпросмотра фото
 import {fillPreview} from './preview.js';
 
@@ -22,7 +21,6 @@ const drawPhotos = (photos) => {
   });
 
   Section.appendChild(fragment);
-  return fragment;
 };
 
 export {drawPhotos};

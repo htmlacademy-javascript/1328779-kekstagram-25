@@ -1,7 +1,7 @@
 const URL_GET = 'https://25.javascript.pages.academy/kekstagram/data';
 const URL_SEND = 'https://25.javascript.pages.academy/kekstagram';
 
-const createLoader = (onSuccess, onError) => () =>
+const receivePhoto = (onSuccess, onError) => () =>
   fetch(
     URL_GET,
     {
@@ -43,4 +43,4 @@ const sendPhoto = (onSuccess, onError, body) => {
     });
 };
 
-export {createLoader, sendPhoto};
+export {receivePhoto, sendPhoto};

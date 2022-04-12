@@ -1,26 +1,29 @@
-import {getRandomInt} from './util.js';
+import {debounce, getRandomPosNeg} from './util.js';
+import {getPhotos} from './loader.js';
 // отрисовка фото на основном экране
 import {drawPhotos} from './draw.js';
 
+const DELAY_DRAW = 500;
+
+
 // отрисовка с учетом фильтра
 // вынесена в отдельную функция для устранения дребезга
-const drawFilteredPhotos = (photos) => {
+const drawFilteredPhotos = () => {
 
+  const photos = getPhotos();
   const filterId = document.querySelector('.img-filters__button--active').id;
 
   // случайные 10 фото
   if (filterId === 'filter-random') {
-    drawPhotos(photos
-      .slice()
-      .sort(() => (getRandomInt(0, photos.length) - Math.ceil(photos.length / 2)))
+    drawPhotos([...photos]
+      .sort(() => (getRandomPosNeg()))
       .slice(0, 10)
     );
   }
 
   // сортировка по кол-ву комментариев
   else if (filterId === 'filter-discussed') {
-    drawPhotos(photos
-      .slice()
+    drawPhotos([...photos]
       .sort((photo1, photo2) => photo2.comments.length - photo1.comments.length)
     );
   }
@@ -43,4 +46,18 @@ const setFilterClick = (button, drawFunction) => {
   });
 };
 
-export {setFilterClick, drawFilteredPhotos};
+// активируем фильтр
+const createFilter = () => {
+
+  const filterButtons = document.querySelectorAll('.img-filters__button');
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  filterButtons.forEach((button) => {
+    setFilterClick(
+      button,
+      debounce(() => drawFilteredPhotos(), DELAY_DRAW)
+    );
+
+  });
+};
+
+export {createFilter, setFilterClick, drawFilteredPhotos};

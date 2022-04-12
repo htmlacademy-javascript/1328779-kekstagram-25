@@ -1,4 +1,8 @@
 
+const getRandomPosNeg = () => {
+  return Math.random() - 0.5;
+};
+
 const getRandomInt = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -49,4 +53,4 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
-export {getRandomInt, validStrLen, getRandomArrayElement, isEscapeKey, debounce, throttle};
+export {getRandomInt, getRandomPosNeg, validStrLen, getRandomArrayElement, isEscapeKey, debounce, throttle};
