@@ -3,6 +3,7 @@ import {isEscapeKey} from './util.js';
 const HASHTAG_COUNT = 5;
 const DESCRIPTION_LENGTH = 140;
 const regexHash = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+let messages;
 
 const inputForm = document.querySelector('.img-upload__form');
 const inputHashtags = document.querySelector('.text__hashtags');
@@ -14,7 +15,7 @@ const onEscKeydownForm = (evt) => {
   }
 };
 
-const getHashArray = (str) => (
+const getHashtags = (str) => (
   str.split(' ')
     .filter((e) => e.length)
     .map((e) => e.toUpperCase())
@@ -29,29 +30,31 @@ const pristine = new Pristine(inputForm,{
   errorTextClass: 'img-upload__error'
 });
 
-const validateHash = (value) => {
-  const arrayMessage = [];
-  if(getHashArray(value).find((e) => !regexHash.test(e))) {
-    arrayMessage.push(`Неверный хэштег! (${value}) `);
+const validateHash = (hashtagString) => {
+  messages = [];
+  const hashtags = getHashtags(hashtagString);
+  const badHashtag = hashtags.find((e) => !regexHash.test(e));
+  if(badHashtag) {
+    messages.push(`Неверный хэштег! (${badHashtag}) `);
   }
-  if (getHashArray(value).length > HASHTAG_COUNT) {
-    arrayMessage.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
+  if (hashtags.length > (new Set(hashtags)).size) {
+    messages.push('Недопустимо повторение хэштегов! ');
   }
-  if (getHashArray(value).length > Array.from(new Set(getHashArray(value))).length) {
-    arrayMessage.push('Недопустимо повторение хэштегов! ');
+  if (hashtags.length > HASHTAG_COUNT) {
+    messages.push(`Допустимо не больше ${HASHTAG_COUNT} хэштегов! `);
   }
-  return arrayMessage;
+  return (messages.length===0);
 };
 
 pristine.addValidator(
   inputHashtags,
-  (value) => (validateHash(value).length===0),
-  (value) => (validateHash(value)[0])
+  (hashtag) => (validateHash(hashtag)),
+  () => (messages[0])
 );
 
 pristine.addValidator(
   inputDescription,
-  (value) => !(value.length > DESCRIPTION_LENGTH),
+  (description) => !(description.length > DESCRIPTION_LENGTH),
   `Максимальная длина ${DESCRIPTION_LENGTH} символов!`
 );
 
