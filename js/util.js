@@ -1,3 +1,5 @@
+const DEFAULT_DELAY = 500;
+
 const getRandomPosNeg = () => (Math.random() - 0.5);
 
 const getRandomInt = (a, b) => {
@@ -8,7 +10,7 @@ const getRandomInt = (a, b) => {
 
 const isEscapeKey = (evt) => (evt.key === 'Escape');
 
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = DEFAULT_DELAY) {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);

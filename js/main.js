@@ -1,7 +1,7 @@
 import {receivePhoto} from './api.js';
-import {drawPhotos} from './draw.js';
+import {drawPhotos} from './main-draw.js';
 import {createModalMessages} from './modal.js';
-import {createFilter} from './filter.js';
+import {createFilter} from './main-filter.js';
 import './form.js';
 
 const loadPhotos = receivePhoto(

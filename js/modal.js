@@ -43,7 +43,10 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-const onButtonCancelClick = () => closeModal();
+const onButtonCancelClick = (evt) => {
+  evt.preventDefault();
+  closeModal();
+};
 
 function openModal (section, buttonClass, closeModalUser) {
   sectionModal = section;
