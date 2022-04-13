@@ -44,6 +44,10 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
+const onButtonCancelClick = (evt) => {
+  closeModal();
+};
+
 function openModal (section, buttonClass, closeModalUser) {
   sectionModal = section;
   btnCancel = sectionModal.querySelector(buttonClass);
@@ -51,7 +55,7 @@ function openModal (section, buttonClass, closeModalUser) {
   sectionModal.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
-  btnCancel.addEventListener('click', closeModal);
+  btnCancel.addEventListener('click', onButtonCancelClick);
 }
 
 function closeModal () {
@@ -61,7 +65,7 @@ function closeModal () {
   sectionModal.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
-  btnCancel.removeEventListener('click', closeModal);
+  btnCancel.removeEventListener('click', onButtonCancelClick);
 }
 
 const onMessageEscKeydown = (evt) => {
@@ -71,16 +75,25 @@ const onMessageEscKeydown = (evt) => {
   }
 };
 
-const onMessageWindow = (evt) => {
+const onButtonMessageClick = (evt) => {
+  dropModalMessages();
+};
+
+const onWrapperMessageClick = (evt) => {
   evt.stopPropagation();
 };
 
+const onWindowClick = (evt) => {
+  dropModalMessages();
+};
+
+
 function dropModalMessages () {
   if (buttonMessages !== null) {
-    buttonMessages.removeEventListener('click', dropModalMessages);
+    buttonMessages.removeEventListener('click', onButtonMessageClick);
   }
-  window.removeEventListener('click', dropModalMessages);
-  wrapperMessages.removeEventListener('click', onMessageWindow);
+  window.removeEventListener('click', onWindowClick);
+  wrapperMessages.removeEventListener('click', onWrapperMessageClick);
   document.removeEventListener('keydown', onMessageEscKeydown);
   sectionMessages.remove();
 }
@@ -93,11 +106,11 @@ function createModalMessages (typeModal) {
     buttonMessages = null;
   } else {
     buttonMessages = sectionMessages.querySelector(button);
-    buttonMessages.addEventListener('click', dropModalMessages);
+    buttonMessages.addEventListener('click', onButtonMessageClick);
   }
   document.addEventListener('keydown', onMessageEscKeydown);
-  wrapperMessages.addEventListener('click', onMessageWindow);
-  window.addEventListener('click', dropModalMessages);
+  wrapperMessages.addEventListener('click', onWrapperMessageClick);
+  window.addEventListener('click', onWindowClick);
   body.append(sectionMessages);
 }
 
