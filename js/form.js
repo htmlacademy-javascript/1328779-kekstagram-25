@@ -1,6 +1,6 @@
 import {closeModal, createModalMessages, openModal} from './modal.js';
-import {initPhotoEditor, dropPhotoEditor} from './photoedit.js';
-import {initValidate, dropValidate, getValidate} from './validate.js';
+import {initPhotoEditor, dropPhotoEditor} from './form-photoedit.js';
+import {initValidate, dropValidate, getValidate} from './form-validate.js';
 import {sendPhoto} from './api.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
@@ -38,7 +38,7 @@ const onsubmitForm = (evt) => {
 };
 
 function createForm () {
-  const file = inputFile.files[0];
+  const [file] = inputFile.files;
   if (!validFileName(file)) {
     return;
   }

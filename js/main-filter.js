@@ -1,8 +1,9 @@
 import {debounce, getRandomPosNeg} from './util.js';
 // отрисовка фото на основном экране
-import {drawPhotos} from './draw.js';
+import {drawPhotos} from './main-draw.js';
 
 const DELAY_DRAW = 500;
+const PHOTO_RANDOM_COUNT = 10;
 
 
 // отрисовка с учетом фильтра
@@ -11,18 +12,18 @@ const drawFilteredPhotos = (photos) => {
 
   const filterId = document.querySelector('.img-filters__button--active').id;
 
-  // случайные 10 фото
+  // случайные фото
   if (filterId === 'filter-random') {
     drawPhotos([...photos]
       .sort(() => (getRandomPosNeg()))
-      .slice(0, 10)
+      .slice(0, PHOTO_RANDOM_COUNT)
     );
   }
 
   // сортировка по кол-ву комментариев
   else if (filterId === 'filter-discussed') {
     drawPhotos([...photos]
-      .sort((photo1, photo2) => photo2.comments.length - photo1.comments.length)
+      .sort((photoPrev, photoNext) => photoNext.comments.length - photoPrev.comments.length)
     );
   }
 
