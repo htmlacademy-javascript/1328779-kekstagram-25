@@ -66,7 +66,7 @@ const changeScale = (scaleValue) =>  {
 };
 
 
-const onclickBtnMinus =  () =>  {
+const onBtnMinusClick =  () =>  {
   const scaleValue = getScale();
   const { min, step } = SCALE_VALUE;
   if(scaleValue > min) {
@@ -74,7 +74,7 @@ const onclickBtnMinus =  () =>  {
   }
 };
 
-const onclickBtnPlus = () =>  {
+const onBtnPlusClick = () =>  {
   const scaleValue = getScale();
   const { max, step } = SCALE_VALUE;
   if(scaleValue < max) {
@@ -136,9 +136,8 @@ const initEffect = (effect) => {
 };
 
 
-const onchangeBtnRadio = (evt) => {
-  const effect = evt.target.value;
-  initEffect(effect);
+const onBtnRadioChange = (evt) => {
+  initEffect(evt.target.value);
 };
 
 
@@ -149,18 +148,18 @@ const initPhotoEditor = (file) => {
   initEffect(getEffect());
   changeScale(100);
   inputEffectList.forEach((element) => {
-    element.addEventListener('change',onchangeBtnRadio);
+    element.addEventListener('change',onBtnRadioChange);
   });
-  btnScaleMinus.addEventListener('click',onclickBtnMinus);
-  btnScalePlus.addEventListener('click', onclickBtnPlus);
+  btnScaleMinus.addEventListener('click',onBtnMinusClick);
+  btnScalePlus.addEventListener('click', onBtnPlusClick);
 };
 
 const dropPhotoEditor = () => {
   inputEffectList.forEach((element) => {
-    element.removeEventListener('change',onchangeBtnRadio);
+    element.removeEventListener('change',onBtnRadioChange);
   });
-  btnScaleMinus.removeEventListener('click',onclickBtnMinus);
-  btnScalePlus.removeEventListener('click', onclickBtnPlus);
+  btnScaleMinus.removeEventListener('click',onBtnMinusClick);
+  btnScalePlus.removeEventListener('click', onBtnPlusClick);
   sliderElement.noUiSlider.destroy();
 };
 
