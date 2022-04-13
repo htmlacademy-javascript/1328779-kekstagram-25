@@ -36,7 +36,6 @@ let buttonMessages;
 
 const body = document.querySelector('body');
 
-
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -44,9 +43,7 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-const onButtonCancelClick = (evt) => {
-  closeModal();
-};
+const onButtonCancelClick = () => closeModal();
 
 function openModal (section, buttonClass, closeModalUser) {
   sectionModal = section;
@@ -75,17 +72,11 @@ const onMessageEscKeydown = (evt) => {
   }
 };
 
-const onButtonMessageClick = (evt) => {
-  dropModalMessages();
-};
+const onButtonMessageClick = () => dropModalMessages();
 
-const onWrapperMessageClick = (evt) => {
-  evt.stopPropagation();
-};
+const onWrapperMessageClick = (evt) => evt.stopPropagation();
 
-const onWindowClick = (evt) => {
-  dropModalMessages();
-};
+const onWindowClick = () => dropModalMessages();
 
 
 function dropModalMessages () {

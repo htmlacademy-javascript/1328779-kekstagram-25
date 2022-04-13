@@ -9,7 +9,7 @@ const inputForm = document.querySelector('.img-upload__form');
 const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
 
-const onEscKeydownForm = (evt) => {
+const onFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
@@ -59,16 +59,16 @@ pristine.addValidator(
 );
 
 
-const getValidate = () => (pristine.validate());
+const getValidate = () => pristine.validate();
 
 const initValidate = () => {
-  inputHashtags.addEventListener('keydown',onEscKeydownForm);
-  inputDescription.addEventListener('keydown',onEscKeydownForm);
+  inputHashtags.addEventListener('keydown',onFormEscKeydown);
+  inputDescription.addEventListener('keydown',onFormEscKeydown);
 };
 
 const dropValidate = () => {
-  inputHashtags.removeEventListener('keydown',onEscKeydownForm);
-  inputDescription.removeEventListener('keydown',onEscKeydownForm);
+  inputHashtags.removeEventListener('keydown',onFormEscKeydown);
+  inputDescription.removeEventListener('keydown',onFormEscKeydown);
   pristine.reset(); // вызывать destroy() смысла нет - event-ы остаются
 };
 

@@ -44,15 +44,18 @@ function createForm () {
   }
   initPhotoEditor(file); // инициализация изображения
   initValidate(); // значения по умолчанию текстовых полей
-  //buttonSubmit.disable = true;
   inputForm.addEventListener('submit', onsubmitForm);
 
-  openModal(uploadForm, '.img-upload__cancel', () => {
-    dropPhotoEditor();
-    dropValidate();
-    inputForm.removeEventListener('submit', onsubmitForm);
-    inputForm.reset();
-    inputFile.value = '';
-  });
+  openModal(
+    uploadForm,
+    '.img-upload__cancel',
+    () => {
+      dropPhotoEditor();
+      dropValidate();
+      inputForm.removeEventListener('submit', onsubmitForm);
+      inputForm.reset();
+      inputFile.value = '';
+    }
+  );
 }
 
